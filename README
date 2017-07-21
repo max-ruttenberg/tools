@@ -1,0 +1,36 @@
+						***********
+						* SUMMARY *
+						***********
+Have you ever found yourself copying the same set of source files from project to project?
+
+Perhaps you have copied your hash table to every project in which you would like to have a lookup table.
+
+But then one day you find a bug in your helper file, and now you need to apply the fix in every projecty.
+
+This library was created with this problem in mind.
+
+It includes some helpful utilities such as a hash table and a linked list library.
+
+Contributions are encouraged.
+   
+				    *********************************
+				    * USING THIS IN A CMAKE PROJECT *
+				    *********************************
+					
+From the top level of your project, do "git clone git@github.com:emusolutions/libemutechnology" and then
+
+add this line to the top level CMakeLists.txt:
+
+				add_subdirectory(libemutechnology)
+
+If you have a CMakeLists.txt file in which you define a target that makes use of libemutechnology, add the
+
+following lines:
+
+			include_directories(${PROJECT_SOURCE_DIR}/libemutechnology/include)
+			link_directories(${PROJECT_SOURCE_DIR}/libemutechnology/src)
+
+And then for each target that requires libemutechnology, add the following two lines:
+
+    	     	  	add_dependencies(<target> emutechnology)
+			target_link_libraries(<target> -lemutechnology)
