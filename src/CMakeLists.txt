@@ -1,3 +1,5 @@
 include_directories("${PROJECT_SOURCE_DIR}/include")
-add_library(emutechnology SHARED table.c)
+set(EMUTECHNOLOGY_SOURCES "table.c")
+add_library(emutechnology SHARED ${EMUTECHNOLOGY_SOURCES})
+add_library(emutechnologystatic STATIC ${EMUTECHNOLOGY_SOURCES})
 install(TARGETS emutechnology LIBRARY DESTINATION lib)
