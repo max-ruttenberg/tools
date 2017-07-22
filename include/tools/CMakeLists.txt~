@@ -1,2 +1,0 @@
-file(GLOB HEADERS_EMUTECHNOLOGY *.h)
-install(FILES ${HEADERS_EMUTECHNOLOGY} DESTINATION include/emutechnology)
