@@ -17,19 +17,17 @@
 /* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, */
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE */
 /* SOFTWARE. */
-#ifndef _INTERNAL_PRINTING_H_
-#define _INTERNAL_PRINTING_H_
-#include <stdio.h>
-#ifdef DEBUG
-#define pr_dbg(fmt,...)				\
-	printf("%-10s" fmt, "debug:", ##__VA_ARGS__)
-#else
-#define pr_dbg(...)
+#ifndef _TOOLS_ZALLOCA_H_
+#define _TOOLS_ZALLOCA_H_
+#include <alloca.h>
+/**
+   @param size how much memory to allocate
+   @return pointer to allocated memory, returns NULL on failure
+   
+   Allocates zeroed memory on the callers stack. Automatically freed
+   when the caller returns.
+ */
+#define zalloca(len)				\
+	calloca(len, 1)
 #endif
 
-#define pr_err(fmt, ...)			\
-	fprintf(stderr, "%-10s" fmt, "error:", ##__VA_ARGS__)
-
-#define pr_warning(fmt, ...)			\
-	fprintf(stderr, "%-10s" fmt, "warning:", ##__VA_ARGS__)
-#endif

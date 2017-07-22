@@ -17,14 +17,16 @@
 /* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, */
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE */
 /* SOFTWARE. */
-#ifndef _ZALLOC_H_
-#define _ZALLOC_H_
+#ifndef _TOOLS_ZALLOC_H_
+#define _TOOLS_ZALLOC_H_
 #include <stdlib.h>
 #include <stddef.h>
-
-#define zalloca(len)				\
-	calloc(len, 1)
-
+/**
+   @param size how much memory to allocate
+   @return pointer to allocated memory, returns NULL on failure
+   
+   Allocates zeroed memory, can be unallocated with a call to free()
+*/
 static inline void *zalloc(size_t size)
 {
 	return calloc(size,1);

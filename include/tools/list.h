@@ -17,9 +17,11 @@
 /* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, */
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE */
 /* SOFTWARE. */
-#ifndef _LIST_H
-#define _LIST_H
-#include "container_of.h"
+
+/* This implementation of a linked list comes from the linux kernel with very few edits */
+#ifndef _TOOLS_LIST_H_
+#define _TOOLS_LIST_H_
+#include <tools/container_of.h>
 
 #define LIST_POISON1 NULL
 #define LIST_POISON2 NULL

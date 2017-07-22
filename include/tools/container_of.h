@@ -17,10 +17,33 @@
 /* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, */
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE */
 /* SOFTWARE. */
-#ifndef _CONTAINER_OF_H_
-#define _CONTAINER_OF_H_
+/*************************************/
+/* This software is taken from Linux */
+/*************************************/
+#ifndef _TOOLS_CONTAINER_OF_H_
+#define _TOOLS_CONTAINER_OF_H_
 #include <stdlib.h>
 
+/**
+   @param ptr pointer to the member of the target struct
+   @param type the type of the target structure
+   @param member the name of the member \p ptr in the target struct
+   
+   Returns a pointer to a containing structure from \p ptr. 
+   Example:
+   
+   struct A {
+   ...
+   };
+   
+   struct B {
+       struct A a;
+   };
+
+   struct B b;
+   struct A *ap = &b->a;
+   container_of(ap, struct B, a) == &b; // this evaluates to true
+ */
 #define container_of(ptr,type,member) ({				\
 			const typeof( ((type*)0)->member )		\
 				*__mptr = (ptr);			\

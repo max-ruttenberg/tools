@@ -17,12 +17,18 @@
 /* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, */
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE */
 /* SOFTWARE. */
-#ifndef _STRDUPA_H_
-#define _STRDUPA_H_
+#ifndef _TOOLS_STRDUPA_H_
+#define _TOOLS_STRDUPA_H_
 #include <alloca.h>
 #include <string.h>
 
 #ifndef strdupa
+/**
+   @param str a string to duplicate
+   
+   Duplicates a string, the result is allocated on the callers stack.
+   The memory is automatically released when the caller returns.
+ */
 #define strdupa(str) ({						\
 			char *tmp = alloca(strlen(str)+1);	\
 			strcpy(tmp, str);})
