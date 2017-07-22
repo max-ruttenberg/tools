@@ -1,12 +1,20 @@
 #include <string.h>
 #include <stdio.h>
 #include <alloca.h>
+#include <stdarg.h>
 #include <errno.h>
+#include <ctype.h>
 #include <internal/printing.h>
 #include <emutechnology/table.h>
 #include <emutechnology/zalloc.h>
 #include <emutechnology/list.h>
 #include <emutechnology/strdupa.h>
+
+struct table_entry {
+	const char *key;
+	intptr_t data;
+	struct list_head bucket;
+};
 
 #define ABSOLUTE_MAX   (1<<30) /* no more than a billion entries */
 #define E_MAX_DEFAULT  (1<<13)
@@ -31,29 +39,28 @@ static unsigned default_hash(const char *key)
 	return h;
 }
 
-static void parse_opt(struct table *table, char *option)
-{
-	char *p, *v;
-	
-	p = strtok_r(option, "=", &v);
-	if (!p)
-		return;
-	
-	if (strcmp(p, "max_size")==0) {
-		table->e_max = atol(v);
+static void parse_opt(struct table *table, char *option, va_list ap)
+{	
+	if (strcmp(option, "max_size")==0) {
+		table->e_max = va_arg(ap, size_t);
 		if (table->e_max > ABSOLUTE_MAX)
 			table->e_max = ABSOLUTE_MAX;
-	} else if (strcmp(p, "size")==0) {
-		table->e_size = atol(v);
+	} else if (strcmp(option, "size")==0) {
+		table->e_size = va_arg(ap, size_t);
+	} else if (strcmp(option, "with_hash")==0) {
+		table->hash = va_arg(ap, table_hash_func);
 	}
 }
-static void parse_opts(struct table *table, const char *options)
+static void parse_opts(struct table *table, const char *options, va_list ap)
 {
-	char *tmp, *opt, *delim = ",";
+	char *tmp, *opt, *delim = " ";
+
+	if (!options)
+		return;
 	
 	tmp = strdupa(options);
 	for (opt = strtok_r(tmp, delim, &tmp); opt; opt = strtok_r(tmp, delim, &tmp)) {
-		parse_opt(table, opt);
+		parse_opt(table, opt, ap);
 	}
 }
 
@@ -111,12 +118,12 @@ static void table_dest_buckets(struct table *table)
 	table->n_entries = 0;
 }
 
-int table_init(struct table *table, const char *options)
+static int vtable_init(struct table *table, const char *options, va_list ap)
 {
 	int ret;
 
 	memset(table, 0, sizeof(*table));
-	parse_opts(table, options);
+	parse_opts(table, options, ap);
 	ret = table_init_parameters(table);
 	if (ret)
 		return ret;
@@ -132,14 +139,30 @@ void table_dest(struct table *table)
 	return;
 }
 
-struct table *table_alloc(const char *options)
+int table_init(struct table *table, const char *options, ...)
+{
+	va_list ap;
+	int ret;
+	
+	va_start(ap, options);
+	ret = vtable_init(table, options, ap);
+	va_end(ap);
+	return ret;
+}
+
+struct table *table_alloc(const char *options, ...)
 {
 	struct table *table = zalloc(sizeof(*table));
+	va_list ap;
 	int ret;
 	
 	if (!table)
 		return NULL;
-	ret = table_init(table, options);
+
+	va_start(ap, options);
+	ret = vtable_init(table, options, ap);
+	va_end(ap);
+	
 	if (ret) {
 		free(table);
 		return NULL;
