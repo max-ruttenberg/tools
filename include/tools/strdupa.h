@@ -31,7 +31,7 @@
  */
 #define strdupa(str) ({						\
 			char *tmp = alloca(strlen(str)+1);	\
-			strcpy(tmp, str);})
+			strcpy(tmp, str);})			
 #endif
 	
 
