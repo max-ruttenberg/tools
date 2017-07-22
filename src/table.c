@@ -5,10 +5,10 @@
 #include <errno.h>
 #include <ctype.h>
 #include <internal/printing.h>
-#include <emutechnology/table.h>
-#include <emutechnology/zalloc.h>
-#include <emutechnology/list.h>
-#include <emutechnology/strdupa.h>
+#include <tools/table.h>
+#include <tools/zalloc.h>
+#include <tools/list.h>
+#include <tools/strdupa.h>
 
 struct table_entry {
 	const char *key;

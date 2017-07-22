@@ -4,8 +4,9 @@
 #include <string.h>
 
 #ifndef strdupa
-#define strdupa(str)				\
-	strcpy((char*)alloca(strlen(str)+1),str)
+#define strdupa(str) ({						\
+			char *tmp = alloca(strlen(str)+1);	\
+			strcpy(tmp, str);})
 #endif
 	
 

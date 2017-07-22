@@ -17,20 +17,20 @@ Contributions are encouraged.
 				    * USING THIS IN A CMAKE PROJECT *
 				    *********************************
 					
-From the top level of your project, do "git clone git@github.com:emusolutions/libemutechnology" and then
+From the top level of your project, do "git clone git@github.com:max-ruttenberg/libtools" and then
 
 add this line to the top level CMakeLists.txt:
 
-				add_subdirectory(libemutechnology)
+				add_subdirectory(libtools)
 
-If you have a CMakeLists.txt file in which you define a target that makes use of libemutechnology, add the
+If you have a CMakeLists.txt file in which you define a target that makes use of libtools, add the
 
 following lines:
 
-			include_directories(${PROJECT_SOURCE_DIR}/libemutechnology/include)
-			link_directories(${PROJECT_SOURCE_DIR}/libemutechnology/src)
+			include_directories(${PROJECT_SOURCE_DIR}/libtools/include)
+			link_directories(${PROJECT_SOURCE_DIR}/libtools/src)
 
-And then for each target that requires libemutechnology, add the following two lines:
+And then for each target that requires libtools, add the following two lines:
 
-    	     	  	add_dependencies(<target> emutechnology)
-			target_link_libraries(<target> -lemutechnology)
+    	     	  	add_dependencies(<target> tools)
+			target_link_libraries(<target> -ltools)
