@@ -19,6 +19,7 @@
 /* SOFTWARE. */
 #ifndef _TOOLS_ZALLOCA_H_
 #define _TOOLS_ZALLOCA_H_
+#include <string.h>
 #include <alloca.h>
 /**
    @param size how much memory to allocate
@@ -27,7 +28,9 @@
    Allocates zeroed memory on the callers stack. Automatically freed
    when the caller returns.
  */
-#define zalloca(len)				\
-	calloca(len, 1)
+#define zalloca(len)	({			\
+	void *__tmpzalloca = alloca(len);	\
+	memset(__tmpzalloca,0,len);})
+		
 #endif
 
