@@ -17,20 +17,20 @@ Contributions are encouraged.
 				    * USING THIS IN A CMAKE PROJECT *
 				    *********************************
 					
-From the top level of your project, do "git clone git@github.com:max-ruttenberg/libtools" and then
+From the top level of your project, do "git clone git@github.com:max-ruttenberg/tools" and then
 
 add this line to the top level CMakeLists.txt:
 
-				add_subdirectory(libtools)
+				add_subdirectory(tools)
 
-If you have a CMakeLists.txt file in which you define a target that makes use of libtools, add the
+If you have a CMakeLists.txt file in which you define a target that makes use of tools, add the
 
 following lines:
 
-			include_directories(${PROJECT_SOURCE_DIR}/libtools/include)
-			link_directories(${PROJECT_SOURCE_DIR}/libtools/src)
+			include_directories(${PROJECT_SOURCE_DIR}/tools/include)
+			link_directories(${PROJECT_SOURCE_DIR}/tools/src)
 
-And then for each target that requires libtools, add the following two lines:
+And then for each target that requires tools, add the following two lines:
 
     	     	  	add_dependencies(<target> tools)
 			target_link_libraries(<target> -ltools)

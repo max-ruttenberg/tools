@@ -12,8 +12,8 @@ struct strdupa_test {
 #define DEFINE_STRDUPA_TEST(t_name, t_target, t_expect)	\
 	{__FILE__ " " t_name, t_target, t_expect},
 
-static struct strdupa_test leaf_routine_tests [] = {
-#include "leaf-routine-tests.inc"
+static struct strdupa_test tests [] = {
+#include "tests.inc"
 };
 
 #undef DEFINE_STRDUPA_TEST
@@ -33,7 +33,7 @@ static struct strdupa_test leaf_routine_tests [] = {
 	       test->test_expect ? test->test_expect : "(nullptr)",	\
 	       result ? result : "(nullptr)")							
 
-static void leaf_routine(struct strdupa_test *test)
+static int leaf_routine(struct strdupa_test *test)
 {
 	const char *result = strdupa(test->test_target);
 
@@ -60,15 +60,20 @@ static void leaf_routine(struct strdupa_test *test)
 	}
 }
 
+
+
 static int run_leaf_routine_tests(void)
 {
 	int i, ret = 0;
+	char *tmp;
 	
-	for (i = 0; i < ARRAY_SIZE(leaf_routine_tests); i++) {
-		ret = ret || leaf_routine(&leaf_routine_tests[i]);
+	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+		ret = ret || leaf_routine(&tests[i]);
 	}
 	return ret;
 }
+
+
 
 int main(int argc, char *argv[])
 {
